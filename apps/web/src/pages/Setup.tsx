@@ -148,7 +148,7 @@ export default function Setup() {
                     <div key={t} className="card soft tight"><div style={{ fontWeight: 600, marginBottom: 4 }}>{t}</div><div className="small muted">{b}</div></div>
                   ))}
                 </div>
-                <Field label="Setup code" hint="This was shown when Deskmate was installed. It is also saved in the file data/setup-code.txt." htmlFor="code">
+                <Field label="Setup code" hint="The code you chose when deploying to the cloud, or the one shown when Deskmate was installed (also saved in data/setup-code.txt)." htmlFor="code">
                   <input id="code" className="input mono" style={{ maxWidth: 220, letterSpacing: '0.08em' }} placeholder="ABCD-1234" value={code} onChange={(e) => setCode(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && checkCode()} />
                 </Field>
               </div>

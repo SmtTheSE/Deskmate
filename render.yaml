@@ -1,0 +1,16 @@
+# One-click deploy to Render. See docs/DEPLOY.md.
+services:
+  - type: web
+    name: deskmate
+    runtime: docker
+    plan: starter            # a paid plan is needed for the persistent disk below
+    healthCheckPath: /healthz
+    disk:
+      name: deskmate-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: APP_SECRET
+        generateValue: true  # encrypts saved keys and passwords
+      - key: SETUP_CODE
+        sync: false          # Render asks you to choose this when you deploy

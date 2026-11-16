@@ -15,6 +15,7 @@ export function buildRouter(svc: Service, opts: { setupCode: () => string | null
   const db = () => svc.db;
   const loginLimit = rateLimiter(10, 60_000);
   const publicLimit = rateLimiter(20, 60_000);
+  const setupLimit = rateLimiter(30, 60_000);
 
   // ---------- helpers ----------
   const currentUser = (ctx: Ctx): User | null => {
@@ -36,6 +37,7 @@ export function buildRouter(svc: Service, opts: { setupCode: () => string | null
   /** During first-time setup, the one-time setup code stands in for a login. */
   const requireSetupOrAdmin = (ctx: Ctx, body: any) => {
     if (!svc.store.configured) {
+      setupLimit(`setup:${ctx.ip}`);
       const code = opts.setupCode();
       if (!code || typeof body?.setupCode !== 'string' || !safeEqual(body.setupCode.trim().toUpperCase(), code)) throw new HttpError(403, 'The setup code is missing or wrong.');
       return 'setup';
@@ -72,7 +74,6 @@ export function buildRouter(svc: Service, opts: { setupCode: () => string | null
   r.post('/api/setup/check-code', async (ctx) => {
     const body = await ctx.body();
     if (svc.store.configured) throw new HttpError(409, 'This help desk is already set up. Please sign in.');
-    loginLimit(`setup:${ctx.ip}`);
     requireSetupOrAdmin(ctx, body);
     return { ok: true };
   });
