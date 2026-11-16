@@ -1,0 +1,30 @@
+# Start Deskmate with:  docker compose up -d
+# Then open the setup link printed by:  docker compose logs deskmate
+services:
+  deskmate:
+    build: .
+    image: deskmate:latest
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PUBLIC_URL: ${PUBLIC_URL:-http://localhost:3000}
+    volumes:
+      - deskmate-data:/data
+
+  # Optional: a private AI model that runs on your own server.
+  # Start it with:  docker compose --profile local-ai up -d
+  # Then in Settings choose "Private model on your own server" with address http://ollama:11434
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["local-ai"]
+    restart: unless-stopped
+    volumes:
+      - ollama-models:/root/.ollama
+
+volumes:
+  deskmate-data:
+  ollama-models:
