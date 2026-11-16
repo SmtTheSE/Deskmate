@@ -4,7 +4,10 @@
   "private": true,
   "description": "Open source, human-in-the-loop AI help desk for schools, universities and organizations.",
   "license": "Apache-2.0",
-  "workspaces": ["packages/*", "apps/*"],
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "scripts": {
     "dev": "npm run dev --workspace @deskmate/server & npm run dev --workspace @deskmate/web",
     "build": "npm run build --workspace @deskmate/web",
@@ -12,5 +15,27 @@
     "test": "npm test --workspace @deskmate/core && npm test --workspace @deskmate/server",
     "typecheck": "tsc -p packages/core && tsc -p apps/server && tsc -p apps/web && tsc -p apps/desktop"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SmtTheSE/Deskmate.git"
+  },
+  "homepage": "https://github.com/SmtTheSE/Deskmate",
+  "bugs": {
+    "url": "https://github.com/SmtTheSE/Deskmate/issues"
+  },
+  "keywords": [
+    "helpdesk",
+    "help-desk",
+    "ai",
+    "schools",
+    "education",
+    "ticketing",
+    "twilio",
+    "human-in-the-loop",
+    "rag",
+    "self-hosted"
+  ]
 }

@@ -65,5 +65,13 @@
     },
     "executableName": "deskmate",
     "publish": null
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SmtTheSE/Deskmate.git"
+  },
+  "homepage": "https://github.com/SmtTheSE/Deskmate",
+  "bugs": {
+    "url": "https://github.com/SmtTheSE/Deskmate/issues"
   }
 }

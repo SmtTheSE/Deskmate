@@ -8,7 +8,7 @@
 
 Questions come in by web form, email, SMS or WhatsApp. Deskmate sorts them, drafts answers from *your own* documents with sources, and **waits for a person to approve every reply**.
 
-[![CI](https://github.com/YOUR-GITHUB-NAME/deskmate/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-GITHUB-NAME/deskmate/actions/workflows/ci.yml)
+[![CI](https://github.com/SmtTheSE/Deskmate/actions/workflows/ci.yml/badge.svg)](https://github.com/SmtTheSE/Deskmate/actions/workflows/ci.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-c2603e.svg)](LICENSE)
 [![Works offline](https://img.shields.io/badge/works%20with-no%20API%20key-3d7a55.svg)](#bring-your-own-ai)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-5f5d57.svg)](CONTRIBUTING.md)
@@ -40,8 +40,8 @@ Pick whichever suits you. **None of them need an AI account**, because the built
 
 | Option | Best for | How |
 |---|---|---|
-| **Desktop app** | Trying it out, or one office | Download from [Releases](https://github.com/YOUR-GITHUB-NAME/deskmate/releases) and double-click it. [Guide](docs/DESKTOP.md) |
-| **One-click cloud** | A public help form, SMS and email | [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/YOUR-GITHUB-NAME/deskmate) Also works on Railway and Fly.io. [Guide](docs/DEPLOY.md) |
+| **Desktop app** | Trying it out, or one office | Download from [Releases](https://github.com/SmtTheSE/Deskmate/releases) and double-click it. [Guide](docs/DESKTOP.md) |
+| **One-click cloud** | A public help form, SMS and email | [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/SmtTheSE/Deskmate) Also works on Railway and Fly.io. [Guide](docs/DEPLOY.md) |
 | **Your own server** | IT teams, strict data rules | `./install.sh` (Docker). [Guide](docs/SETUP_GUIDE.md) |
 
 Then open the link it gives you and follow the wizard.
@@ -144,7 +144,7 @@ In one file on your own computer, server or cloud disk. Back it up by copying th
 - [ ] **0.3:** embeddings search (pgvector), website and Google Drive import, multilingual replies, evaluation dashboard (accuracy, time saved)
 - [ ] **0.4:** voice calls with a summary handed to a person, Zammad and FreeScout connectors, signed installers
 
-Have a need that isn't here? [Open an issue](https://github.com/YOUR-GITHUB-NAME/deskmate/issues/new/choose). We especially want to hear from schools.
+Have a need that isn't here? [Open an issue](https://github.com/SmtTheSE/Deskmate/issues/new/choose). We especially want to hear from schools.
 
 ## Contributing
 
