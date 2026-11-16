@@ -51,7 +51,7 @@ export function buildRouter(svc: Service, opts: { setupCode: () => string | null
     ctx.res.setHeader('set-cookie', `${SESSION_COOKIE}=${id}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_DAYS * 86400}${opts.secureCookies ? '; Secure' : ''}`);
     svc.store.save();
   };
-  const publicUser = (u: User) => ({ id: u.id, name: u.name, email: u.email, role: u.role });
+  const publicUser = (u: User) => ({ id: u.id, name: u.name, email: u.email, role: u.role, mustChangePassword: Boolean(u.mustChangePassword) });
   const getTicket = (id: string) => {
     const t = db().tickets.find((x) => x.id === id || x.ref === id);
     if (!t) throw new HttpError(404, 'That conversation was not found.');
@@ -188,10 +188,54 @@ export function buildRouter(svc: Service, opts: { setupCode: () => string | null
     if (!str(b.name) || !/^\S+@\S+\.\S+$/.test(email)) throw new HttpError(400, 'Please enter a name and a valid email.');
     if (db().users.some((u) => u.email === email)) throw new HttpError(409, 'Someone with that email already has an account.');
     const tempPassword = randomId(9);
-    const u: User = { id: randomId(), name: str(b.name, 120), email, passwordHash: hashPassword(tempPassword), role: b.role === 'admin' ? 'admin' : 'staff', createdAt: new Date().toISOString() };
+    const u: User = { id: randomId(), name: str(b.name, 120), email, passwordHash: hashPassword(tempPassword), role: b.role === 'admin' ? 'admin' : 'staff', mustChangePassword: true, createdAt: new Date().toISOString() };
     db().users.push(u);
     svc.audit(admin.email, 'user_added', `Added ${u.name} (${u.role}).`);
     return { user: publicUser(u), tempPassword };
+  });
+
+  r.post('/api/users/:id/reset-password', async (ctx) => {
+    const admin = requireAdmin(ctx);
+    const u = db().users.find((x) => x.id === ctx.params.id);
+    if (!u) throw new HttpError(404, 'That person was not found.');
+    const tempPassword = randomId(9);
+    u.passwordHash = hashPassword(tempPassword);
+    u.mustChangePassword = true;
+    db().sessions = db().sessions.filter((s) => s.userId !== u.id);
+    svc.audit(admin.email, 'password_reset', `Reset the password for ${u.name}.`);
+    return { tempPassword };
+  });
+  r.delete('/api/users/:id', (ctx) => {
+    const admin = requireAdmin(ctx);
+    if (ctx.params.id === admin.id) throw new HttpError(400, 'You cannot remove your own account.');
+    const u = db().users.find((x) => x.id === ctx.params.id);
+    if (!u) throw new HttpError(404, 'That person was not found.');
+    if (u.role === 'admin' && db().users.filter((x) => x.role === 'admin').length <= 1) throw new HttpError(400, 'There must always be at least one administrator.');
+    db().users = db().users.filter((x) => x.id !== u.id);
+    db().sessions = db().sessions.filter((s) => s.userId !== u.id);
+    svc.audit(admin.email, 'user_removed', `Removed ${u.name}.`);
+    return { ok: true };
+  });
+  r.post('/api/auth/password', async (ctx) => {
+    const u = requireUser(ctx);
+    const b = await ctx.body();
+    if (!verifyPassword(str(b.current, 200), u.passwordHash)) throw new HttpError(400, 'Your current password is not right.');
+    if (str(b.next, 200).length < 10) throw new HttpError(400, 'Please choose a new password with at least 10 characters.');
+    u.passwordHash = hashPassword(str(b.next, 200));
+    u.mustChangePassword = false;
+    const sid = ctx.cookies[SESSION_COOKIE];
+    db().sessions = db().sessions.filter((s) => s.userId !== u.id || s.id === sid);
+    svc.audit(u.email, 'password_changed', 'Changed their password.');
+    return { ok: true };
+  });
+
+  // A full copy of the help desk for safekeeping. Saved keys stay encrypted.
+  r.get('/api/backup', (ctx) => {
+    const admin = requireAdmin(ctx);
+    const { sessions: _s, ...rest } = db();
+    svc.audit(admin.email, 'backup_downloaded', 'Downloaded a backup.');
+    const day = new Date().toISOString().slice(0, 10);
+    return { __download: `deskmate-backup-${day}.json`, data: { ...rest, users: rest.users.map(({ passwordHash: _p, ...u }) => u) } };
   });
 
   // ---------- tickets ----------

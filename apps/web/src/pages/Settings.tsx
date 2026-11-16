@@ -161,6 +161,11 @@ export default function Settings({ session }: { session: Session }) {
             <Field label={`Confidence needed to send automatically: ${Math.round(s.policy.autoSendMinConfidence * 100)}%`} hint="Only applies to departments where you've turned on automatic replies.">
               <input type="range" min={0.5} max={0.99} step={0.01} value={s.policy.autoSendMinConfidence} onChange={(e) => setS({ ...s, policy: { ...s.policy, autoSendMinConfidence: Number(e.target.value) } })} style={{ accentColor: 'var(--accent)' }} />
             </Field>
+            <div className="card flat stack-sm">
+              <div className="label">Backups</div>
+              <div className="hint">Download a full copy of your help desk: settings, documents, conversations and the activity log. Saved keys stay encrypted. Keep it somewhere safe.</div>
+              <div><a className="btn" href="/api/backup" download>Download a backup</a></div>
+            </div>
             <SaveBtn body={() => ({ policy: { ...s.policy, sensitivePhrases: s.policy.sensitivePhrases.filter((p: string) => p.trim()) } })} />
           </div>
         )}
@@ -185,7 +190,11 @@ function Team() {
         {users.map((u) => (
           <div key={u.id} className="list-item" style={{ alignItems: 'center' }}>
             <div><div className="subject">{u.name}</div><div className="summary">{u.email}</div></div>
-            <span className="badge">{u.role === 'admin' ? 'Administrator' : 'Staff'}</span>
+            <div className="row">
+              <span className="badge">{u.role === 'admin' ? 'Administrator' : 'Staff'}</span>
+              <button className="btn ghost sm" onClick={async () => { setError(null); try { const r = await api(`/api/users/${u.id}/reset-password`, { method: 'POST' }); setCreated({ email: u.email, tempPassword: r.tempPassword }); } catch (e: any) { setError(e.message); } }}>Reset password</button>
+              <button className="btn ghost sm danger" onClick={async () => { setError(null); try { await api(`/api/users/${u.id}`, { method: 'DELETE' }); load(); } catch (e: any) { setError(e.message); } }}>Remove</button>
+            </div>
           </div>
         ))}
       </div>
@@ -202,7 +211,7 @@ function Team() {
           </select>
         </Field>
         {error && <Notice kind="danger">{error}</Notice>}
-        {created && <Notice kind="ok">Account created. Give {created.email} this temporary password: <strong className="mono">{created.tempPassword}</strong></Notice>}
+        {created && <Notice kind="ok">Give {created.email} this temporary password. They will be asked to choose their own when they sign in: <strong className="mono">{created.tempPassword}</strong></Notice>}
         <div><button className="btn primary" onClick={async () => {
           setError(null);
           try { const r = await api('/api/users', { body: form }); setCreated({ email: r.user.email, tempPassword: r.tempPassword }); setForm({ name: '', email: '', role: 'staff' }); load(); } catch (e: any) { setError(e.message); }

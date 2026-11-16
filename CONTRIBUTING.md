@@ -19,6 +19,10 @@ npm run typecheck
 - Every action a person or the AI takes should be recorded with `svc.audit(...)`.
 - Add a test for behavior changes in `packages/core/test` or `apps/server/test`.
 
+## Recording the demo videos
+
+Start a server on a fresh data folder with `SETUP_CODE=LINCOLN-2026 PORT=3200` (plus a second one on port 3201 for the hero clip), then run `node scripts/record-hero.cjs <dir>` or `node scripts/record-walkthrough.cjs <dir>`. Convert with ffmpeg as described at the top of each script.
+
 ## Good first issues
 
 New templates (for example clinics or libraries), translations of the UI, better PDF handling, and more redaction patterns for other countries' ID numbers.

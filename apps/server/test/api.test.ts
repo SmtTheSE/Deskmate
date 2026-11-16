@@ -92,3 +92,34 @@ test('API rejects non-JSON writes (CSRF protection) and anonymous access', async
   const anon = await fetch(`${base}/api/tickets`);
   assert.equal(anon.status, 401);
 });
+
+test('team: invite, temporary password, reset, change password, remove', async () => {
+  const added = await call('/api/users', { name: 'Sam Staff', email: 'sam@test.org' });
+  assert.equal(added.status, 200);
+  assert.equal(added.data.user.mustChangePassword, true);
+  const reset = await call(`/api/users/${added.data.user.id}/reset-password`, {});
+  assert.ok(reset.data.tempPassword);
+
+  const adminCookie = cookie;
+  cookie = '';
+  const login = await call('/api/auth/login', { email: 'sam@test.org', password: reset.data.tempPassword });
+  assert.equal(login.status, 200);
+  assert.equal(login.data.user.mustChangePassword, true);
+  assert.equal((await call('/api/auth/password', { current: 'wrong', next: 'a brand new password' })).status, 400);
+  assert.equal((await call('/api/auth/password', { current: reset.data.tempPassword, next: 'a brand new password' })).status, 200);
+  assert.equal((await call('/api/auth/me')).data.user.mustChangePassword, false);
+  assert.equal((await call('/api/settings')).status, 403); // staff cannot change settings
+
+  cookie = adminCookie;
+  assert.equal((await call(`/api/users/${added.data.user.id}`, undefined, 'DELETE')).status, 200);
+});
+
+test('backup download contains data but no password hashes or sessions', async () => {
+  const res = await fetch(`${base}/api/backup`, { headers: { cookie } });
+  assert.equal(res.status, 200);
+  assert.match(res.headers.get('content-disposition') ?? '', /attachment; filename="deskmate-backup-/);
+  const data: any = await res.json();
+  assert.ok(data.tickets.length > 0);
+  assert.equal(data.sessions, undefined);
+  assert.ok(data.users.every((u: any) => !('passwordHash' in u)));
+});

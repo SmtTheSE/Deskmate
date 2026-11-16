@@ -1,0 +1,29 @@
+name: Something isn't working
+description: Tell us about a problem. You don't need to be technical.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead? Screenshots help a lot.
+    validations: { required: true }
+  - type: dropdown
+    id: install
+    attributes:
+      label: How do you run Deskmate?
+      options: [Desktop app, Render, Railway, Fly.io, Docker on our own server, From source]
+    validations: { required: true }
+  - type: dropdown
+    id: model
+    attributes:
+      label: Which AI assistant?
+      options: [Built-in assistant, OpenAI, Anthropic, Local model (Ollama), Not sure]
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Shown on the Releases page you downloaded from, if you know it.
+  - type: markdown
+    attributes:
+      value: "**Please do not paste real names, emails, student details, passwords or API keys.** For security problems, use a private security advisory instead (see SECURITY.md)."

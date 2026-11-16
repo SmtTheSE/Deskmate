@@ -1,0 +1,19 @@
+name: Idea or request
+description: Suggest something that would help your organization.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the situation at your school or organization. The "why" matters more than the solution.
+    validations: { required: true }
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would help?
+  - type: dropdown
+    id: org
+    attributes:
+      label: Type of organization
+      options: [School, University or college, Company, Nonprofit, Other]
