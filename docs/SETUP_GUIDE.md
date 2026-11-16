@@ -4,6 +4,8 @@ You do not need to be technical to set up Deskmate. If someone in IT has already
 
 ## 1. Install
 
+**Just want to try it, or run it for one office?** Install the desktop app ([DESKTOP.md](DESKTOP.md)) and double-click it. The setup code is filled in for you, so skip to step 2.
+
 **No server? Put it online from your browser instead.** Follow [DEPLOY.md](DEPLOY.md) to use Render or Railway. You choose your own setup code there, then skip to step 2.
 
 **Have a server or computer to run it on?** Ask whoever looks after your computers or server to run one command in the Deskmate folder:

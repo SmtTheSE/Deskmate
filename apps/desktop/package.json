@@ -1,0 +1,69 @@
+{
+  "name": "@deskmate/desktop",
+  "productName": "Deskmate",
+  "version": "0.1.0",
+  "description": "Deskmate help desk for Windows and Mac",
+  "license": "Apache-2.0",
+  "private": true,
+  "main": "dist/main.cjs",
+  "author": "Deskmate contributors",
+  "scripts": {
+    "bundle": "node scripts/bundle.mjs",
+    "start": "npm run bundle && electron .",
+    "dist": "npm run bundle && electron-builder",
+    "dist:mac": "npm run bundle && electron-builder --mac",
+    "dist:win": "npm run bundle && electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "45.3.3",
+    "electron-builder": "^26.18.0",
+    "esbuild": "^0.28.2"
+  },
+  "build": {
+    "appId": "org.deskmate.app",
+    "productName": "Deskmate",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../web/dist",
+        "to": "web"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.business",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Office",
+      "desktop": {
+        "entry": {
+          "StartupWMClass": "Deskmate"
+        }
+      }
+    },
+    "executableName": "deskmate",
+    "publish": null
+  }
+}

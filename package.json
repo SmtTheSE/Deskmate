@@ -10,7 +10,7 @@
     "build": "npm run build --workspace @deskmate/web",
     "start": "npm run start --workspace @deskmate/server",
     "test": "npm test --workspace @deskmate/core && npm test --workspace @deskmate/server",
-    "typecheck": "tsc -p packages/core && tsc -p apps/server && tsc -p apps/web"
+    "typecheck": "tsc -p packages/core && tsc -p apps/server && tsc -p apps/web && tsc -p apps/desktop"
   },
   "engines": { "node": ">=22" }
 }
