@@ -13,8 +13,16 @@ const here = dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT ?? 3000);
 const DATA_DIR = resolve(process.env.DATA_DIR ?? join(here, '../../../data'));
 const WEB_DIR = resolve(process.env.WEB_DIR ?? join(here, '../../web/dist'));
-const PUBLIC_URL = (process.env.PUBLIC_URL ?? `http://localhost:${PORT}`).replace(/\/$/, '');
-const TRUST_PROXY = process.env.TRUST_PROXY === 'true';
+// Cloud hosts tell us our public address, so admins never have to type it.
+const PUBLIC_URL = (
+  process.env.PUBLIC_URL ||
+  process.env.RENDER_EXTERNAL_URL ||
+  (process.env.RAILWAY_PUBLIC_DOMAIN ? `https://${process.env.RAILWAY_PUBLIC_DOMAIN}` : '') ||
+  (process.env.FLY_APP_NAME ? `https://${process.env.FLY_APP_NAME}.fly.dev` : '') ||
+  `http://localhost:${PORT}`
+).replace(/\/$/, '');
+const ON_CLOUD = Boolean(process.env.RENDER || process.env.RAILWAY_ENVIRONMENT || process.env.FLY_APP_NAME);
+const TRUST_PROXY = process.env.TRUST_PROXY ? process.env.TRUST_PROXY === 'true' : ON_CLOUD;
 
 initKey(DATA_DIR, process.env.APP_SECRET);
 const store = new Store(DATA_DIR, () => randomId(18));
@@ -25,7 +33,9 @@ const svc = new Service(store, PUBLIC_URL);
 let setupCode: string | null = null;
 const codeFile = join(DATA_DIR, 'setup-code.txt');
 if (!store.configured) {
-  setupCode = process.env.SETUP_CODE?.toUpperCase() || randomBytes(4).toString('hex').toUpperCase().replace(/(.{4})/, '$1-');
+  const chosen = process.env.SETUP_CODE?.trim().toUpperCase();
+  if (chosen && chosen.length < 8) console.warn('  SETUP_CODE is shorter than 8 characters, so a random code was generated instead.');
+  setupCode = chosen && chosen.length >= 8 ? chosen : randomBytes(4).toString('hex').toUpperCase().replace(/(.{4})/, '$1-');
   writeFileSync(codeFile, `${setupCode}\n`);
 }
 

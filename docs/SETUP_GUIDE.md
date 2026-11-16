@@ -4,7 +4,9 @@ You do not need to be technical to set up Deskmate. If someone in IT has already
 
 ## 1. Install
 
-Ask whoever looks after your computers or server to run one command in the Deskmate folder:
+**No server? Put it online from your browser instead.** Follow [DEPLOY.md](DEPLOY.md) to use Render or Railway. You choose your own setup code there, then skip to step 2.
+
+**Have a server or computer to run it on?** Ask whoever looks after your computers or server to run one command in the Deskmate folder:
 
 ```
 ./install.sh

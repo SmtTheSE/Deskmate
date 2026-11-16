@@ -24,7 +24,15 @@ Deskmate collects questions from a web form, email, and text messages. It sorts 
 
 ## Quick start
 
-### For non-technical admins (one command)
+### Put it online in a few clicks (no Docker needed)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/YOUR-GITHUB-NAME/deskmate)
+
+Choose a setup code when Render asks, wait a few minutes, then open your new address. Railway and Fly.io work too. The [deploy guide](docs/DEPLOY.md) explains each one step by step, with no command line.
+
+> Maintainers: replace `YOUR-GITHUB-NAME` in the button link once the repository is published.
+
+### On your own server (one command)
 
 You need [Docker](https://docs.docker.com/get-docker/) installed. Then, in this folder:
 
@@ -103,10 +111,10 @@ The interface takes **big inspiration from the Claude app by Anthropic**: its wa
 
 | Phase | What |
 |---|---|
-| **1 (this release)** | Setup wizard, inbox and approval queue, web form, outbound email, inbound email webhook, Twilio SMS and WhatsApp webhook, PII redaction, safety screen, document search, OpenAI, Anthropic, and Ollama adapters, audit log, templates |
+| **1 (this release)** | One-click cloud deploy (Render, Railway, Fly.io), setup wizard, inbox and approval queue, web form, outbound email, inbound email webhook, Twilio SMS and WhatsApp webhook, PII redaction, safety screen, document search, OpenAI, Anthropic, and Ollama adapters, audit log, templates |
 | 2 | Postgres storage option, IMAP mailbox polling (no webhook needed), identity checks for SMS, password reset by email, per-department staff assignment, SLA reminders |
 | 3 | Embeddings search (pgvector), website and Google Drive import, multilingual replies, evaluation dashboard (accuracy, deflection, time saved) |
-| 4 | Voice calls through Twilio with a summary handed to a person, Zammad and FreeScout connectors, one-click cloud deploy buttons |
+| 4 | Voice calls through Twilio with a summary handed to a person, Zammad and FreeScout connectors, desktop app for Windows and Mac |
 
 ## Contributing
 
