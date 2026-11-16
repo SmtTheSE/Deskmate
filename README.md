@@ -27,26 +27,24 @@ Front offices, IT desks and registrars answer the same questions every day: *How
 
 Deskmate is built the other way round:
 
-| | |
-|---|---|
-| 🧑‍🏫 **Set up by office staff** | A friendly setup wizard in the browser, with templates for schools, universities and companies. You paste a key and press *Test connection*. No config files. |
-| ✅ **A person approves every reply** | AI drafts wait in an inbox. Staff approve with one click, edit, or write their own. You can turn on automatic replies per department, and only once you trust them. |
-| 📚 **Answers only from your documents** | Drop in handbooks and policies. Every draft cites its source. When the answer isn't there, it says a person will follow up and doesn't guess. |
-| 🔒 **Private by design** | Names, emails, phone numbers and ID numbers are hidden *before* anything reaches an AI. You can run a fully local model so nothing leaves your building. |
-| 🛟 **Safeguarding first** | Messages about self-harm, abuse, threats or emergencies skip the AI completely and are flagged urgent for a person. |
-| 🧾 **Accountable** | Every AI decision and every human action is recorded in a plain-language activity log. |
+- **Set up by office staff.** A friendly setup wizard in the browser, with templates for schools, universities and companies. You paste a key and press *Test connection*. No config files.
+- **A person approves every reply.** AI drafts wait in an inbox. Staff approve with one click, edit, or write their own. You can turn on automatic replies per department, and only once you trust them.
+- **Answers only from your documents.** Drop in handbooks and policies. Every draft cites its source. When the answer isn't there, it says a person will follow up and doesn't guess.
+- **Private by design.** Names, emails, phone numbers and ID numbers are hidden *before* anything reaches an AI. You can run a fully local model so nothing leaves your building.
+- **Safeguarding first.** Messages about self-harm, abuse, threats or emergencies skip the AI completely and are flagged urgent for a person.
+- **Accountable.** Every AI decision and every human action is recorded in a plain-language activity log.
 
 ## Get started in minutes
 
 Pick whichever suits you. **None of them need an AI account**, because the built-in assistant works offline for free.
 
-| | Best for | How |
+| Option | Best for | How |
 |---|---|---|
-| 💻 **Desktop app** | Trying it out, or one office | Download from [Releases](https://github.com/YOUR-GITHUB-NAME/deskmate/releases) and double-click it. [Guide](docs/DESKTOP.md) |
-| ☁️ **One-click cloud** | A public help form, SMS and email | [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/YOUR-GITHUB-NAME/deskmate) Also works on Railway and Fly.io. [Guide](docs/DEPLOY.md) |
-| 🖥️ **Your own server** | IT teams, strict data rules | `./install.sh` (Docker). [Guide](docs/SETUP_GUIDE.md) |
+| **Desktop app** | Trying it out, or one office | Download from [Releases](https://github.com/YOUR-GITHUB-NAME/deskmate/releases) and double-click it. [Guide](docs/DESKTOP.md) |
+| **One-click cloud** | A public help form, SMS and email | [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/YOUR-GITHUB-NAME/deskmate) Also works on Railway and Fly.io. [Guide](docs/DEPLOY.md) |
+| **Your own server** | IT teams, strict data rules | `./install.sh` (Docker). [Guide](docs/SETUP_GUIDE.md) |
 
-Then open the link it gives you and follow the wizard. That's it.
+Then open the link it gives you and follow the wizard.
 
 <details>
 <summary><b>Docker Compose and local AI details</b></summary>
@@ -68,11 +66,11 @@ docker compose exec ollama ollama pull llama3.1
   Web form · Email · SMS · WhatsApp
                  │
                  ▼
-   ① Hide personal details ............ the AI never sees them
-   ② Safety screen ─────────────────▶ sensitive → "Needs a person", no AI draft
-   ③ Sort by department and urgency
-   ④ Search your documents
-   ⑤ Draft a reply with numbered sources
+   1. Hide personal details ............ the AI never sees them
+   2. Safety screen ─────────────────▶ sensitive → "Needs a person", no AI draft
+   3. Sort by department and urgency
+   4. Search your documents
+   5. Draft a reply with numbered sources
                  │
                  ▼
    Inbox: "Needs your review" ──▶ approve · edit · discard
