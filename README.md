@@ -6,6 +6,12 @@ Deskmate collects questions from a web form, email, and text messages. It sorts 
 
 > Status: Phase 1 MVP. It works end to end with no API keys, using the built-in offline assistant. See the [roadmap](#roadmap).
 
+| Setup wizard | Approve an AI draft |
+|---|---|
+| ![Setup wizard](docs/screenshots/setup-wizard.png) | ![Approval](docs/screenshots/approval.png) |
+| **Home** | **Sensitive message, sent to a person** |
+| ![Home](docs/screenshots/home.png) | ![Needs a person](docs/screenshots/needs-a-person.png) |
+
 ## Why Deskmate
 
 - **Set up in a browser, no config files.** A guided wizard covers your organization name, departments (with School, University, and Company templates), AI choice with a *Test connection* button, channels, and drag-and-drop documents.
@@ -27,6 +33,8 @@ You need [Docker](https://docs.docker.com/get-docker/) installed. Then, in this 
 ```
 
 It starts Deskmate and prints a link like `http://localhost:3000/setup?code=ABCD-1234`. Open it and follow the wizard. The [Setup guide](docs/SETUP_GUIDE.md) walks through every screen in plain language.
+
+> The Docker files are written but have not yet been test-built (the build environment had no Docker daemon). The Node path below is fully tested.
 
 ### With Docker Compose directly
 
