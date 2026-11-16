@@ -58,6 +58,7 @@ const server = createServer(async (req, res) => {
       if (!m) throw new HttpError(404, 'Not found');
       ctx.params = m.params;
       const out: any = await m.handler(ctx);
+      if (out && out.__download) return send(res, 200, JSON.stringify(out.data, null, 1), { 'content-type': 'application/json; charset=utf-8', 'content-disposition': `attachment; filename="${out.__download}"` });
       if (out && out.__twiml) return send(res, 200, '<?xml version="1.0" encoding="UTF-8"?><Response></Response>', { 'content-type': 'text/xml' });
       if (store.configured && setupCode) {
         setupCode = null;

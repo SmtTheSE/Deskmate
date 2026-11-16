@@ -1,130 +1,177 @@
+<div align="center">
+
+<img src="apps/desktop/build/icon.png" width="84" alt="" />
+
 # Deskmate
 
-**An open source AI help desk for schools, universities, and organizations, built to be set up by the people who run the front office and not only by developers.**
+**The open source AI help desk that a school office can set up by itself.**
 
-Deskmate collects questions from a web form, email, and text messages. It sorts each one to the right department, drafts a reply from your own documents with sources, and **waits for a person to approve it** before anything is sent.
+Questions come in by web form, email, SMS or WhatsApp. Deskmate sorts them, drafts answers from *your own* documents with sources, and **waits for a person to approve every reply**.
 
-> Status: Phase 1 MVP. It works end to end with no API keys, using the built-in offline assistant. See the [roadmap](#roadmap).
+[![CI](https://github.com/YOUR-GITHUB-NAME/deskmate/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR-GITHUB-NAME/deskmate/actions/workflows/ci.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-c2603e.svg)](LICENSE)
+[![Works offline](https://img.shields.io/badge/works%20with-no%20API%20key-3d7a55.svg)](#bring-your-own-ai)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-5f5d57.svg)](CONTRIBUTING.md)
 
-| Setup wizard | Approve an AI draft |
+[**Try it**](#get-started-in-minutes) · [**Watch the 3-minute tour**](docs/media/walkthrough.mp4) · [**How it works**](#how-it-works) · [**Docs**](docs/)
+
+<img src="docs/media/demo.gif" width="880" alt="Deskmate demo: setting it up, a parent's question being sorted, an AI draft with sources approved in one click, and a safeguarding concern sent straight to a person" />
+
+</div>
+
+---
+
+## Why Deskmate?
+
+Front offices, IT desks and registrars answer the same questions every day: *How do I reset my password? Has the bus stop changed? When does term start?* AI can help, but most AI help desks are built for tech companies. They need developers to set up, they send student data to whoever hosts them, and they reply to people with nobody checking.
+
+Deskmate is built the other way round:
+
+| | |
 |---|---|
-| ![Setup wizard](docs/screenshots/setup-wizard.png) | ![Approval](docs/screenshots/approval.png) |
-| **Home** | **Sensitive message, sent to a person** |
-| ![Home](docs/screenshots/home.png) | ![Needs a person](docs/screenshots/needs-a-person.png) |
+| 🧑‍🏫 **Set up by office staff** | A friendly setup wizard in the browser, with templates for schools, universities and companies. You paste a key and press *Test connection*. No config files. |
+| ✅ **A person approves every reply** | AI drafts wait in an inbox. Staff approve with one click, edit, or write their own. You can turn on automatic replies per department, and only once you trust them. |
+| 📚 **Answers only from your documents** | Drop in handbooks and policies. Every draft cites its source. When the answer isn't there, it says a person will follow up and doesn't guess. |
+| 🔒 **Private by design** | Names, emails, phone numbers and ID numbers are hidden *before* anything reaches an AI. You can run a fully local model so nothing leaves your building. |
+| 🛟 **Safeguarding first** | Messages about self-harm, abuse, threats or emergencies skip the AI completely and are flagged urgent for a person. |
+| 🧾 **Accountable** | Every AI decision and every human action is recorded in a plain-language activity log. |
 
-## Why Deskmate
+## Get started in minutes
 
-- **Set up in a browser, no config files.** A guided wizard covers your organization name, departments (with School, University, and Company templates), AI choice with a *Test connection* button, channels, and drag-and-drop documents.
-- **A person approves every reply by default.** Automatic replies can be switched on per department once you trust the drafts, and only for confident answers that come from your documents.
-- **Answers only from your documents.** Every draft cites the handbook or policy it used. When nothing matches, it says a person will follow up and does not guess.
-- **Private by design.** Emails, phone numbers, card numbers, and ID numbers are replaced with placeholders before any text reaches an AI model. You can run a fully local model with Ollama.
-- **Safety first.** Messages about self-harm, abuse, violence, or emergencies skip the AI entirely and are flagged for a person.
-- **Accountable.** Every AI decision and every human action is written to a plain-language activity log.
-- **Bring your own model.** Built-in offline assistant (free, no account), OpenAI, Anthropic, or a local model through Ollama.
+Pick whichever suits you. **None of them need an AI account**, because the built-in assistant works offline for free.
 
-## Quick start
+| | Best for | How |
+|---|---|---|
+| 💻 **Desktop app** | Trying it out, or one office | Download from [Releases](https://github.com/YOUR-GITHUB-NAME/deskmate/releases) and double-click it. [Guide](docs/DESKTOP.md) |
+| ☁️ **One-click cloud** | A public help form, SMS and email | [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/YOUR-GITHUB-NAME/deskmate) Also works on Railway and Fly.io. [Guide](docs/DEPLOY.md) |
+| 🖥️ **Your own server** | IT teams, strict data rules | `./install.sh` (Docker). [Guide](docs/SETUP_GUIDE.md) |
 
-### Try it on your computer (Windows, Mac, Linux)
+Then open the link it gives you and follow the wizard. That's it.
 
-Download the desktop app from the Releases page and double-click it. The setup wizard opens with everything filled in. See [docs/DESKTOP.md](docs/DESKTOP.md).
-
-### Put it online in a few clicks (no Docker needed)
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/YOUR-GITHUB-NAME/deskmate)
-
-Choose a setup code when Render asks, wait a few minutes, then open your new address. Railway and Fly.io work too. The [deploy guide](docs/DEPLOY.md) explains each one step by step, with no command line.
-
-> Maintainers: replace `YOUR-GITHUB-NAME` in the button link once the repository is published.
-
-### On your own server (one command)
-
-You need [Docker](https://docs.docker.com/get-docker/) installed. Then, in this folder:
-
-```sh
-./install.sh
-```
-
-It starts Deskmate and prints a link like `http://localhost:3000/setup?code=ABCD-1234`. Open it and follow the wizard. The [Setup guide](docs/SETUP_GUIDE.md) walks through every screen in plain language.
-
-> The Docker files are written but have not yet been test-built (the build environment had no Docker daemon). The Node path below is fully tested.
-
-### With Docker Compose directly
+<details>
+<summary><b>Docker Compose and local AI details</b></summary>
 
 ```sh
 docker compose up -d --build
-docker compose logs deskmate        # shows your setup link
-```
+docker compose logs deskmate                 # shows your setup link
 
-Optional private AI model on the same server:
-
-```sh
+# Optional: a private AI model on the same server
 docker compose --profile local-ai up -d
 docker compose exec ollama ollama pull llama3.1
+# then choose "Private model on your own server" with address http://ollama:11434
 ```
+</details>
 
-### For developers
-
-Requires Node.js 22 or newer.
-
-```sh
-npm install
-npm run dev          # server on :3000, web app on :5173 (open http://localhost:5173)
-npm test             # core + API tests
-npm run typecheck
-npm run build && npm start   # production mode on :3000
-```
-
-The setup code is printed in the terminal and saved to `data/setup-code.txt`.
-
-## How a message flows
+## How it works
 
 ```
- Web form / Email / SMS / WhatsApp
-                │
-                ▼
-     1. Hide personal details        (the AI never sees them)
-     2. Safety screen ──────────────► sensitive? → "Needs a person", no AI draft
-     3. Sort: department, urgency, one-line summary
-     4. Search your documents
-     5. Draft a reply with numbered sources
-                │
-                ▼
-     Inbox: "Needs your review"  ──►  staff edit / approve / discard
-                │
-                ▼
-     Sent by email, SMS, WhatsApp, or shown on the requester's status page
-     Everything recorded in the activity log
+  Web form · Email · SMS · WhatsApp
+                 │
+                 ▼
+   ① Hide personal details ............ the AI never sees them
+   ② Safety screen ─────────────────▶ sensitive → "Needs a person", no AI draft
+   ③ Sort by department and urgency
+   ④ Search your documents
+   ⑤ Draft a reply with numbered sources
+                 │
+                 ▼
+   Inbox: "Needs your review" ──▶ approve · edit · discard
+                 │
+                 ▼
+   Delivered by email, SMS, WhatsApp, or on the requester's private status page.
+   Everything is recorded in the activity log.
 ```
 
-## Project layout
+<table>
+<tr>
+<td width="50%"><img src="docs/screenshots/approval.png" alt="Approving an AI draft with its source" /><br/><sub><b>Approve a draft.</b> Sources are shown, and the parent's phone number was hidden from the AI.</sub></td>
+<td width="50%"><img src="docs/screenshots/needs-a-person.png" alt="A safeguarding message flagged for a person" /><br/><sub><b>Safeguarding.</b> No AI reply is written. A person handles it.</sub></td>
+</tr>
+<tr>
+<td><img src="docs/screenshots/setup-wizard.png" alt="Setup wizard" /><br/><sub><b>Setup wizard.</b> Templates, departments, AI, channels, documents.</sub></td>
+<td><img src="docs/screenshots/home.png" alt="Home dashboard" /><br/><sub><b>Home.</b> What's waiting, in plain language, plus how often drafts were approved as written.</sub></td>
+</tr>
+</table>
 
-```
-packages/core     The engine: redaction, safety screen, triage, search, drafting, model adapters, templates
-apps/server       HTTP API, webhooks, storage, sending (Node, no framework)
-apps/web          Setup wizard, admin console, public help form (React + Vite)
-apps/desktop      Desktop app (Electron) that runs the server and opens the console
-docs/             Architecture, design system, setup guide
-```
+## Bring your own AI
 
-Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the details and the reasoning behind them.
+| Option | Cost | Data leaves your network? |
+|---|---|---|
+| Built-in assistant (sorts by keywords, quotes your documents) | Free | No |
+| Private model via [Ollama](https://ollama.com) | Free (your hardware) | No |
+| OpenAI | Pay per use | Yes, with personal details already hidden |
+| Anthropic Claude | Pay per use | Yes, with personal details already hidden |
 
-## Design
+You can switch at any time in Settings. Adding another provider takes about 60 lines ([how](docs/ARCHITECTURE.md#extending)).
 
-The interface takes **big inspiration from the Claude app by Anthropic**: its warm neutral palette, serif headings paired with a clean sans-serif, comfortable type sizes and line heights, generous spacing, and rounded, minimal components. We wanted a help desk that feels calm and readable for office staff, and the Claude app is one of the best examples of that. This is inspiration only. Deskmate uses its own colors, open-source fonts (Source Serif 4 and Inter), and its own logo, and it uses no Anthropic branding or assets. See [docs/DESIGN.md](docs/DESIGN.md).
+## Features
+
+- **Setup wizard** with School, University, Company and blank templates, editable departments, and a *Test connection* button for the AI, email and Twilio
+- **Inbox** with filters, search, urgency, and "Needs your review" and "Needs a person" queues
+- **Draft review** with sources, confidence, a note on what the AI did, and one-click approve, edit, regenerate or discard
+- **Knowledge library** where you drag and drop PDFs, text, Markdown or web pages, or paste text, then *check what the assistant would find*
+- **Channels:** public help form with a private status page, email replies (SMTP), inbound email webhook, and Twilio SMS and WhatsApp with signature verification
+- **Automatic replies per department**, optional and limited to confident, sourced, non-sensitive answers
+- **Team** roles (admin and staff), temporary passwords, password changes and resets
+- **Activity log** of every AI and human action, and **backup download**
+- **Security:** one-time setup code, encrypted secrets, scrypt passwords, CSRF protection, rate limits, and a bot honeypot
+- **Light and dark mode**, and a layout that works on a phone
+
+## FAQ
+
+<details><summary><b>Do we need an OpenAI or Anthropic account?</b></summary>
+No. The built-in assistant works offline and free. It quotes the most relevant parts of your documents. Hosted models write more natural replies, and you can switch whenever you like.
+</details>
+
+<details><summary><b>Is student data sent to AI companies?</b></summary>
+Only if you choose a hosted model, and even then personal details (emails, phone numbers, ID and card numbers) are replaced with placeholders first. With the built-in assistant or a local model, nothing leaves your server. Sensitive messages never go to any AI.
+</details>
+
+<details><summary><b>Will it reply to people on its own?</b></summary>
+Not unless you turn that on, per department. Even then it only sends answers that come from your documents, are above your confidence threshold, and aren't sensitive. Everything else waits for a person.
+</details>
+
+<details><summary><b>We already use Zammad, FreeScout or osTicket.</b></summary>
+Connectors are on the roadmap. Deskmate's built-in inbox exists so small organizations don't need a second product, but the engine (<code>packages/core</code>) is designed to sit on top of other ticketing tools too.
+</details>
+
+<details><summary><b>Where is our data stored?</b></summary>
+In one file on your own computer, server or cloud disk. Back it up by copying that folder, or use <i>Settings → Privacy and safety → Download a backup</i>.
+</details>
 
 ## Roadmap
 
-| Phase | What |
-|---|---|
-| **1 (this release)** | Desktop app (Windows, Mac, Linux), one-click cloud deploy (Render, Railway, Fly.io), setup wizard, inbox and approval queue, web form, outbound email, inbound email webhook, Twilio SMS and WhatsApp webhook, PII redaction, safety screen, document search, OpenAI, Anthropic, and Ollama adapters, audit log, templates |
-| 2 | Postgres storage option, IMAP mailbox polling (no webhook needed), identity checks for SMS, password reset by email, per-department staff assignment, SLA reminders |
-| 3 | Embeddings search (pgvector), website and Google Drive import, multilingual replies, evaluation dashboard (accuracy, deflection, time saved) |
-| 4 | Voice calls through Twilio with a summary handed to a person, Zammad and FreeScout connectors, code-signed desktop installers |
+- [x] **0.1:** setup wizard, approval inbox, grounded drafting, redaction, safety screen, web form, email, SMS and WhatsApp, desktop app, one-click deploy
+- [ ] **0.2:** Postgres option, IMAP mailbox polling, password reset by email, staff assignment and SLA reminders, translations of the interface
+- [ ] **0.3:** embeddings search (pgvector), website and Google Drive import, multilingual replies, evaluation dashboard (accuracy, time saved)
+- [ ] **0.4:** voice calls with a summary handed to a person, Zammad and FreeScout connectors, signed installers
+
+Have a need that isn't here? [Open an issue](https://github.com/YOUR-GITHUB-NAME/deskmate/issues/new/choose). We especially want to hear from schools.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Security reports: see [SECURITY.md](SECURITY.md).
+Deskmate welcomes contributors who aren't developers too: translations, templates for your kind of organization, documentation, and reports of anything confusing. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+
+```sh
+npm install && npm run dev      # API on :3000, web app on :5173
+npm test && npm run typecheck
+```
+
+```
+packages/core   engine: redaction, safety, triage, search, drafting, model adapters, templates
+apps/server     HTTP API, webhooks, storage, sending (Node, no framework)
+apps/web        setup wizard, console, public help form (React + Vite)
+apps/desktop    desktop app (Electron)
+```
+
+Architecture and design decisions: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). Security: [SECURITY.md](SECURITY.md).
+
+## Design and acknowledgements
+
+The interface takes **big inspiration from the [Claude](https://claude.ai) app by Anthropic**: its warm neutral palette, serif headings with a clean sans-serif, comfortable type sizes, generous spacing, and rounded, minimal components. We wanted a help desk that feels calm for people who use it all day. This is inspiration only. Deskmate has its own colors, open-source fonts (Source Serif 4 and Inter), and its own logo, and it isn't affiliated with Anthropic. See [docs/DESIGN.md](docs/DESIGN.md).
+
+The idea grew from a hackathon project that routed Twilio calls to AI agents, reworked here for the real-world needs of schools: privacy, safeguarding, accountability, and setup without developers.
 
 ## License
 
-[Apache License 2.0](LICENSE)
+[Apache License 2.0](LICENSE). Free to use, change and share, including commercially.

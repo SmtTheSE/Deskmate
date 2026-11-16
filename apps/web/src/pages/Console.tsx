@@ -9,9 +9,10 @@ import TicketView from './TicketView';
 import Knowledge from './Knowledge';
 import Settings from './Settings';
 import Activity from './Activity';
+import Account from './Account';
 
 export interface Session {
-  user: { id: string; name: string; email: string; role: 'admin' | 'staff' };
+  user: { id: string; name: string; email: string; role: 'admin' | 'staff'; mustChangePassword?: boolean };
   org: { name: string; departments: Pick<Department, 'id' | 'name' | 'description'>[] };
   refresh: () => void;
 }
@@ -51,6 +52,7 @@ export default function Console({ path }: { path: string }) {
   else if (parts[1] === 'knowledge') page = <Knowledge />;
   else if (parts[1] === 'settings') page = <Settings session={ctx} />;
   else if (parts[1] === 'activity') page = <Activity />;
+  else if (parts[1] === 'account') page = <Account session={ctx} />;
   else page = <Home session={ctx} />;
 
   return (
@@ -77,7 +79,7 @@ export default function Console({ path }: { path: string }) {
         <div className="nav-section">Share</div>
         <a className="nav-item" href="/help" target="_blank" rel="noreferrer">Open the help form ↗</a>
         <div className="footer">
-          <div className="nav-item" style={{ cursor: 'default' }}>
+          <Link to="/app/account" className={`nav-item ${parts[1] === 'account' ? 'active' : ''}`}>
             <span className="logo" style={{ background: 'var(--text)', color: 'var(--bg)', width: 28, height: 28, borderRadius: 999, fontSize: 12, fontWeight: 600 }}>
               {session.user.name.slice(0, 1).toUpperCase()}
             </span>
@@ -85,11 +87,18 @@ export default function Console({ path }: { path: string }) {
               <div style={{ color: 'var(--text)', fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}>{session.user.name}</div>
               <div className="xs faint">{session.user.role === 'admin' ? 'Administrator' : 'Staff'}</div>
             </div>
-          </div>
+          </Link>
           <button className="btn ghost sm" style={{ width: '100%', justifyContent: 'flex-start' }} onClick={async () => { await api('/api/auth/logout', { method: 'POST' }); navigate('/login'); }}>Sign out</button>
         </div>
       </aside>
-      <main className="main">{page}</main>
+      <main className="main">
+        {session.user.mustChangePassword && parts[1] !== 'account' && (
+          <div className="notice warn" style={{ borderRadius: 0, justifyContent: 'center' }}>
+            You are using a temporary password. <Link to="/app/account">Choose your own password</Link>
+          </div>
+        )}
+        {page}
+      </main>
     </div>
   );
 }

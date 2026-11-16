@@ -51,6 +51,8 @@ export interface User {
   email: string;
   passwordHash: string;
   role: 'admin' | 'staff';
+  /** Set for accounts created with a temporary password. */
+  mustChangePassword?: boolean;
   createdAt: string;
 }
 
