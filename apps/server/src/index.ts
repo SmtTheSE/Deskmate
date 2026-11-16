@@ -74,7 +74,7 @@ const server = createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, process.env.HOST || undefined, () => {
   console.log(`\n  Deskmate is running at ${PUBLIC_URL}`);
   if (setupCode) {
     console.log(`\n  First time? Open this link to set up your help desk:\n\n    ${PUBLIC_URL}/setup?code=${setupCode}\n`);

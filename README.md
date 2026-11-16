@@ -24,6 +24,10 @@ Deskmate collects questions from a web form, email, and text messages. It sorts 
 
 ## Quick start
 
+### Try it on your computer (Windows, Mac, Linux)
+
+Download the desktop app from the Releases page and double-click it. The setup wizard opens with everything filled in. See [docs/DESKTOP.md](docs/DESKTOP.md).
+
 ### Put it online in a few clicks (no Docker needed)
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/YOUR-GITHUB-NAME/deskmate)
@@ -98,6 +102,7 @@ The setup code is printed in the terminal and saved to `data/setup-code.txt`.
 packages/core     The engine: redaction, safety screen, triage, search, drafting, model adapters, templates
 apps/server       HTTP API, webhooks, storage, sending (Node, no framework)
 apps/web          Setup wizard, admin console, public help form (React + Vite)
+apps/desktop      Desktop app (Electron) that runs the server and opens the console
 docs/             Architecture, design system, setup guide
 ```
 
@@ -111,10 +116,10 @@ The interface takes **big inspiration from the Claude app by Anthropic**: its wa
 
 | Phase | What |
 |---|---|
-| **1 (this release)** | One-click cloud deploy (Render, Railway, Fly.io), setup wizard, inbox and approval queue, web form, outbound email, inbound email webhook, Twilio SMS and WhatsApp webhook, PII redaction, safety screen, document search, OpenAI, Anthropic, and Ollama adapters, audit log, templates |
+| **1 (this release)** | Desktop app (Windows, Mac, Linux), one-click cloud deploy (Render, Railway, Fly.io), setup wizard, inbox and approval queue, web form, outbound email, inbound email webhook, Twilio SMS and WhatsApp webhook, PII redaction, safety screen, document search, OpenAI, Anthropic, and Ollama adapters, audit log, templates |
 | 2 | Postgres storage option, IMAP mailbox polling (no webhook needed), identity checks for SMS, password reset by email, per-department staff assignment, SLA reminders |
 | 3 | Embeddings search (pgvector), website and Google Drive import, multilingual replies, evaluation dashboard (accuracy, deflection, time saved) |
-| 4 | Voice calls through Twilio with a summary handed to a person, Zammad and FreeScout connectors, desktop app for Windows and Mac |
+| 4 | Voice calls through Twilio with a summary handed to a person, Zammad and FreeScout connectors, code-signed desktop installers |
 
 ## Contributing
 
