@@ -15,7 +15,7 @@
     "dist:win": "npm run bundle && electron-builder --win"
   },
   "devDependencies": {
-    "electron": "45.3.3",
+    "electron": "45.4.1",
     "electron-builder": "^26.18.0",
     "esbuild": "^0.28.2"
   },

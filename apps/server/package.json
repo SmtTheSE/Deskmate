@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@deskmate/core": "0.1.0",
-    "nodemailer": "^10.6.0",
+    "nodemailer": "^10.6.1",
     "unpdf": "^2.2.1"
   },
   "devDependencies": {
